@@ -35,10 +35,11 @@ jobs:
           sudo echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
           sudo apt-get update
           sudo apt-get install logstash
+          mkdir /tmp/logstash
 
       - name: Test with Logstash
         run: |
           #molecule test -s ${{ matrix.scenario }}
-          /usr/share/logstash/bin/logstash  --path.settings /etc/logstash/ --path.config '*conf'
+          /usr/share/logstash/bin/logstash  --path.settings /etc/logstash/ --path.config '*conf' --path.data /tmp/logstash/
         #env:
         #  MOLECULE_DISTRO: ${{ matrix.distro }}
