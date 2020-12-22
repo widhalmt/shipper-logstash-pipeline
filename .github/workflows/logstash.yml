@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: debian-latest
+    runs-on: ubuntu-latest
 
     #strategy:
     #  # max-parallel: 4
@@ -29,12 +29,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt-get update
-          apt-get install gpg
+          sudo apt-get update
+          sudo apt-get install gpg
           wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
-          echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
-          apt-get update
-          apt-get install logstash
+          sudo echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
+          sudo apt-get update
+          sudo apt-get install logstash
 
       - name: Test with Logstash
         run: |
