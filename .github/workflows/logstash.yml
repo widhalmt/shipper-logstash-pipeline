@@ -40,6 +40,6 @@ jobs:
       - name: Test with Logstash
         run: |
           #molecule test -s ${{ matrix.scenario }}
-          /usr/share/logstash/bin/logstash  --path.settings /etc/logstash/ --path.config '*conf' --path.data /tmp/logstash/
+          /usr/share/logstash/bin/logstash  --path.settings /etc/logstash/ --path.config '*conf' --path.data /tmp/logstash/ --config.test_and_exit
         #env:
         #  MOLECULE_DISTRO: ${{ matrix.distro }}
