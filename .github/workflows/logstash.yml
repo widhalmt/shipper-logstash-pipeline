@@ -1,0 +1,44 @@
+---
+name: Logstash Syntax
+on:
+  push:
+    tags:
+      - v*
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    #strategy:
+    #  # max-parallel: 4
+    #  matrix:
+    #    distro: [centos7, debian10]
+    #    scenario: [default, run_logstash, full_stack]
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+     # - name: Set up Python 3.8
+     #   uses: actions/setup-python@v2
+     #   with:
+     #     python-version: 3.8
+
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install gpg
+          wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+          echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
+          apt-get update
+          apt-get install logstash
+
+      - name: Test with Logstash
+        run: |
+          #molecule test -s ${{ matrix.scenario }}
+          /usr/share/logstash/bin/logstash  --path.settings /etc/logstash/ --path.config '*conf'
+        #env:
+        #  MOLECULE_DISTRO: ${{ matrix.distro }}
